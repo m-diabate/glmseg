@@ -1,0 +1,21 @@
+Package: glmseg
+Title: Segmentation package based on MaxEM algorithm
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Modibo",
+           family = "DIABATE",
+           role = c("aut", "cre"),
+           email = "modibo.diabate@parisdescartes.fr",
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: From a vector y of n observations and possibly of p covariates (p = 1 actually corresponds to a problem without covariate), the package allows to split the data into K parts by calculating K-1 breakpoints using a method combining the Fused-Lasso and MaxEM algorithms. Its particularity is to be able to be used easily for a large number of loss functions (Gaussian, Poissonian, logistic, and even survival (survreg)), to adapt to homoscedastic and heteroscedastic data, and  to be able to take into account covariates unlike to certain reference segmentation methods like GFPOP (which still allows to compute global maxima unlike glmseg which uses heuristics as an alternative to its local maxima problems).
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Imports: 
+    bazar,
+    gfpop,
+    glmnet,
+    gtools,
+    stats
