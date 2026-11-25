@@ -1,0 +1,61 @@
+---
+title: "Change-point detection with glmseg"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Change-point detection with glmseg}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r}
+library(glmseg)
+set.seed(1)
+n <- 600
+y <- c(rnorm(200, 0, 1), rnorm(200, 8, 1), rnorm(200, -6, 1))
+
+# Fixed K = 3
+fit <- glmseg(y, K = 3, family = gaussian_homo(), init = "binseg")
+fit
+summary(fit)
+
+# Automatic selection of K by BIC
+sel <- select_k(y, K_max = 5, family = gaussian_homo(), init = "binseg")
+sel$K
+sel$bic
+
+# Comparison with GFPOP (mean model)
+```
+
+```{r, eval = requireNamespace("gfpop", quietly = TRUE)}
+gfpop_gauss(y, K = 3)$bp
+```
+
+## Non-Gaussian families
+
+`glmseg` supports logistic and Poisson losses through the same interface.
+
+```{r}
+set.seed(3)
+n <- 600
+yb <- c(rbinom(300, 1, plogis(-1.6)), rbinom(300, 1, plogis(1.6)))
+glmseg(yb, K = 2, family = logistic_family(), init = "binseg")$bp
+
+yc <- c(rpois(300, exp(0.4)), rpois(300, exp(2.2)))
+glmseg(yc, K = 2, family = poisson_family(), init = "binseg")$bp
+```
+
+## Survival (Weibull-AFT) segmentation
+
+For right-censored data, `survseg()` detects change-points in a Weibull-AFT model
+(requires the `survival` package).
+
+```{r, eval = requireNamespace("survival", quietly = TRUE)}
+set.seed(5)
+n <- 600
+X <- matrix(1, n, 1)
+tt <- c(rweibull(300, shape = 1.3, scale = exp(0.3)),
+        rweibull(300, shape = 1.3, scale = exp(3.0)))
+cc <- rexp(n, rate = 1 / 80)
+time <- pmin(tt, cc); status <- as.numeric(tt <= cc)
+survseg(time, status, K = 2, init = "binseg")$bp
+```

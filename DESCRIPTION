@@ -1,0 +1,36 @@
+Package: glmseg
+Title: Change-Point Detection in Regression Models via the Max-EM Algorithm
+Version: 0.1.0
+Authors@R: c(
+    person("Modibo", "Diabaté", email = "modibo.diabate.pro@gmail.com",
+           role = c("aut", "cre")),
+    person("Grégory", "Nuel", role = "aut"),
+    person("Olivier", "Bouaziz", role = "aut"))
+Description: Detection of an unknown number of change-points in regression
+    models using the max-EM algorithm, which combines a constrained hidden
+    Markov model with a Classification-EM step. Supports Gaussian (homoscedastic
+    and heteroscedastic), logistic, Poisson, and Weibull accelerated failure
+    time (survival) regression, with covariates, Fused-Lasso and Binary
+    Segmentation initializations, and model selection via BIC (with an optional
+    modified penalty to curb over-segmentation). The method is described in
+    Diabate, Nuel and Bouaziz (2025) <doi:10.1016/j.csda.2025.108278>.
+License: GPL-3
+URL: https://github.com/m-diabate/glmseg
+BugReports: https://github.com/m-diabate/glmseg/issues
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.1
+Depends: R (>= 4.1)
+Imports:
+    stats,
+    glmnet,
+    graphics,
+    gtools
+Suggests:
+    testthat (>= 3.0.0),
+    knitr,
+    rmarkdown,
+    survival,
+    gfpop
+Config/testthat/edition: 3
+VignetteBuilder: knitr

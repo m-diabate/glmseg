@@ -1,0 +1,7 @@
+^.*\.Rproj$
+^\.Rproj\.user$
+^\.RData$
+^\.Rhistory$
+^docs$
+^LICENSE\.md$
+^cran-comments\.md$
